@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $categories
+            'data' => CategoryResource::collection($categories)
         ]);
     }
 
@@ -29,8 +30,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Category created successfully.',
-            'data' => $category
+            'message' => 'Category created successfully.'
         ], 201);
     }
 
@@ -48,7 +48,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $category
+            'data' => new CategoryResource($category)
         ]);
     }
 
@@ -72,7 +72,7 @@ class CategoryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Category updated successfully.',
-            'data' => $category
+         
         ]);
     }
 
