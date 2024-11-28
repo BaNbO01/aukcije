@@ -27,7 +27,7 @@ class AuthController extends Controller
             'username'=> $reqest->username,
             'email'=> $reqest->email,
             'password'=> Hash::make($reqest->password),
-            'role'=>'user'
+            'role'=> $reqest->role,
         ]);
  
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -38,6 +38,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if(!Auth::attempt($request->only('email','password'))){
+            
             return response()->json(['success'=> false]);
         }
  

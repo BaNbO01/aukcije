@@ -1,0 +1,31 @@
+.navigation {
+    background-color: #1e1e2f;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .nav-list {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 15px;
+  }
+  
+  .nav-list li {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  .nav-list a {
+    text-decoration: none;
+    color: #f4f4f4;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-list a:hover {
+    color: #ffd700; /* Zlatna boja */
+  }
+  
