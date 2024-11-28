@@ -7,9 +7,15 @@
  use Illuminate\Support\Facades\Log;
  use App\Models\Auction;
  use Illuminate\Support\Facades\Auth;
- 
+ use App\Http\Resources\AuctionResource;
+ use App\Http\Resources\UserResource;
  class UserController extends Controller
  {
+
+
+
+
+
     public function getUserAuctions($id)
     {
         try {
@@ -18,7 +24,7 @@
             $auctions = $user->myAuctions()->paginate(10);
             return response()->json([
                 'success' => true,
-                'data' => $auctions,
+                'data' => AuctionResource::collection($auctions),
             ], 200); 
         }  catch (\Exception $e) {
            
@@ -102,7 +108,7 @@ public function getUserWonAuctions()
     $userId = Auth::id();
     $user = User::findOrFail($userId);
     $auctions = $user->winnerAuctions()->paginate(10);
-    return response()->json($auctions);
+    return AuctionResource::collection($auctions);
 }
 
     
@@ -117,7 +123,7 @@ public function getUserParticipatedAuctions()
 
         return response()->json([
             'success' => true,
-            'data' => $auctions
+            'data' => AuctionResource::collection($auctions)
         ], 200);
     } catch (\Exception $e) {
         return response()->json([
@@ -126,6 +132,24 @@ public function getUserParticipatedAuctions()
             'error' => $e->getMessage()
         ], 500);
     }
+}
+
+
+
+public function index(Request $request){
+    try{
+        $users = User::all();
+        return UserResource::collection($users);
+    
+    }
+    catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Failed to fetch users.',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+   
 }
     
  }

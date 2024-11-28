@@ -43,7 +43,7 @@ Route::post('/auctions', [AuctionController::class, 'store']);
 
 Route::post('/auctions/{auctionId}/place-offer', [AuctionController::class, 'placeOffer']);
 
-
+Route::get('/users',[UserController::class,'index']);
 Route::delete('/users/{id}', [UserController::class, 'destroy']);
 Route::get('/users/{id}/auctions', [UserController::class, 'getUserAuctions']);
 Route::get('/user/won-auctions', [UserController::class, 'getUserWonAuctions']);

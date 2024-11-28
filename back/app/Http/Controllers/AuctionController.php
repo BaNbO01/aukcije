@@ -8,6 +8,8 @@ use App\Models\Auction;
 use App\Models\Offer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\AuctionResource;
+use App\Http\Resources\OfferResource;
 
 class AuctionController extends Controller
 {
@@ -51,7 +53,7 @@ public function filterAuctions(Request $request)
 
     return response()->json([
         'success' => true,
-        'data' => $auctions,
+        'data' => AuctionResource::collection($auctions),
     ]);
 }
 
@@ -100,7 +102,7 @@ public function placeOffer(Request $request, $auctionId)
         return response()->json([
             'success' => true,
             'message' => 'Offer placed successfully.',
-            'offer' => $offer
+            'offer' => new OfferResource($offer),
         ], 201); 
 
     } catch (\Exception $e) {
@@ -215,7 +217,7 @@ public function store(Request $request)
             $auction->categories()->sync($categoryIds);  
         }
 
-        return response()->json(['message' => 'Auction created successfully.', 'auction' => $auction], 201);
+        return response()->json(['message' => 'Auction created successfully.'], 201);
     } catch (\Exception $e) {
         return response()->json([
             'message' => 'Failed to create auction.',
@@ -265,8 +267,7 @@ public function update(Request $request, $id)
         $auction->save();
 
         return response()->json([
-            'message' => 'Aukcija je uspešno ažurirana',
-            'auction' => $auction
+            'message' => 'Aukcija je uspešno ažurirana'
         ], 200);
     } catch (\Exception $e) {
         return response()->json([
